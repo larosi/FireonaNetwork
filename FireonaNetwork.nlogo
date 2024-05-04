@@ -16,11 +16,13 @@ to setup
 end
 
 to setup-nodes
-  set-default-shape turtles "circle"
+  set-default-shape turtles "tree"
+
   create-turtles number-of-nodes
   [
     ; for visual reasons, we don't put any nodes *too* close to the edges
     setxy (random-xcor * 0.95) (random-ycor * 0.95)
+    set size 2
     become-susceptible
     set virus-check-timer random virus-check-frequency
   ]
@@ -55,11 +57,13 @@ to go
   ]
   spread-virus
   do-virus-checks
+  fade-infected
   tick
 end
 
 to become-infected  ;; turtle procedure
   set infected? true
+  set shape "fire"
   set resistant? false
   set color red
 end
@@ -67,14 +71,23 @@ end
 to become-susceptible  ;; turtle procedure
   set infected? false
   set resistant? false
-  set color blue
+  set color green
 end
 
 to become-resistant  ;; turtle procedure
   set infected? false
   set resistant? true
+  set shape "house"
   set color gray
   ask my-links [ set color gray - 2 ]
+end
+
+to fade-infected
+  ask turtles with [infected?]
+    [ set color color - 0.3  ;; make red darker
+      if color < red - 3.5     ;; are we almost at black?
+        [ set color color
+          die ] ]
 end
 
 to spread-virus
@@ -103,11 +116,11 @@ end
 GRAPHICS-WINDOW
 265
 10
-724
-470
+1011
+757
 -1
 -1
-11.0
+18.0
 1
 10
 1
@@ -136,7 +149,7 @@ gain-resistance-chance
 gain-resistance-chance
 0.0
 100
-5.0
+84.0
 1
 1
 %
@@ -151,7 +164,7 @@ recovery-chance
 recovery-chance
 0.0
 10.0
-5.0
+5.1
 0.1
 1
 %
@@ -166,7 +179,7 @@ virus-spread-chance
 virus-spread-chance
 0.0
 10.0
-2.5
+0.5
 0.1
 1
 %
@@ -235,7 +248,7 @@ number-of-nodes
 number-of-nodes
 10
 300
-150.0
+55.0
 5
 1
 NIL
@@ -250,7 +263,7 @@ virus-check-frequency
 virus-check-frequency
 1
 20
-1.0
+8.0
 1
 1
 ticks
@@ -265,7 +278,7 @@ initial-outbreak-size
 initial-outbreak-size
 1
 number-of-nodes
-3.0
+11.0
 1
 1
 NIL
@@ -280,7 +293,7 @@ average-node-degree
 average-node-degree
 1
 number-of-nodes - 1
-6.0
+7.0
 1
 1
 NIL
@@ -476,6 +489,13 @@ Circle -16777216 true false 60 75 60
 Circle -16777216 true false 180 75 60
 Polygon -16777216 true false 150 168 90 184 62 210 47 232 67 244 90 220 109 205 150 198 192 205 210 220 227 242 251 229 236 206 212 183
 
+fire
+false
+0
+Polygon -7500403 true true 151 286 134 282 103 282 59 248 40 210 32 157 37 108 68 146 71 109 83 72 111 27 127 55 148 11 167 41 180 112 195 57 217 91 226 126 227 203 256 156 256 201 238 263 213 278 183 281
+Polygon -955883 true false 126 284 91 251 85 212 91 168 103 132 118 153 125 181 135 141 151 96 185 161 195 203 193 253 164 286
+Polygon -2674135 true false 155 284 172 268 172 243 162 224 148 201 130 233 131 260 135 282
+
 fish
 false
 0
@@ -517,6 +537,27 @@ Rectangle -7500403 true true 45 120 255 285
 Rectangle -16777216 true false 120 210 180 285
 Polygon -7500403 true true 15 120 150 15 285 120
 Line -16777216 false 30 120 270 120
+
+house two story
+false
+0
+Polygon -7500403 true true 2 180 227 180 152 150 32 150
+Rectangle -7500403 true true 270 75 285 255
+Rectangle -7500403 true true 75 135 270 255
+Rectangle -16777216 true false 124 195 187 256
+Rectangle -16777216 true false 210 195 255 240
+Rectangle -16777216 true false 90 150 135 180
+Rectangle -16777216 true false 210 150 255 180
+Line -16777216 false 270 135 270 255
+Rectangle -7500403 true true 15 180 75 255
+Polygon -7500403 true true 60 135 285 135 240 90 105 90
+Line -16777216 false 75 135 75 180
+Rectangle -16777216 true false 30 195 93 240
+Line -16777216 false 60 135 285 135
+Line -16777216 false 255 105 285 135
+Line -16777216 false 0 180 75 180
+Line -7500403 true 60 195 60 240
+Line -7500403 true 154 195 154 255
 
 leaf
 false
