@@ -9,10 +9,11 @@ to setup
   clear-all
   setup-nodes
   setup-spatially-clustered-network
-  ask n-of initial-outbreak-size turtles
-    [ become-infected ]
   ask n-of initial-resistant turtles
     [ become-resistant ]
+  ask n-of initial-outbreak-size turtles
+    [ become-infected ]
+
   ask links [ set color white ]
   reset-ticks
 end
@@ -152,7 +153,7 @@ gain-resistance-chance
 gain-resistance-chance
 0.0
 100
-50.0
+60.0
 1
 1
 %
@@ -167,7 +168,7 @@ recovery-chance
 recovery-chance
 0.0
 10.0
-6.7
+5.0
 0.1
 1
 %
@@ -182,7 +183,7 @@ virus-spread-chance
 virus-spread-chance
 0.0
 10.0
-1.0
+2.5
 0.1
 1
 %
@@ -251,7 +252,7 @@ number-of-nodes
 number-of-nodes
 10
 300
-165.0
+150.0
 5
 1
 NIL
@@ -296,7 +297,7 @@ average-node-degree
 average-node-degree
 1
 number-of-nodes - 1
-21.0
+8.0
 1
 1
 NIL
@@ -311,7 +312,7 @@ initial-resistant
 initial-resistant
 0
 (number-of-nodes)-(initial-outbreak-size)
-25.0
+0.0
 1
 1
 NIL
