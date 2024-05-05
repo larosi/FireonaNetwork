@@ -11,6 +11,8 @@ to setup
   setup-spatially-clustered-network
   ask n-of initial-outbreak-size turtles
     [ become-infected ]
+  ask n-of initial-resistant turtles
+    [ become-resistant ]
   ask links [ set color white ]
   reset-ticks
 end
@@ -69,6 +71,7 @@ to become-infected  ;; turtle procedure
 end
 
 to become-susceptible  ;; turtle procedure
+  set shape "tree"
   set infected? false
   set resistant? false
   set color green
@@ -77,8 +80,8 @@ end
 to become-resistant  ;; turtle procedure
   set infected? false
   set resistant? true
-  set shape "house"
-  set color gray
+  set shape "plant small"
+  set color brown
   ask my-links [ set color gray - 2 ]
 end
 
@@ -86,8 +89,8 @@ to fade-infected
   ask turtles with [infected?]
     [ set color color - 0.3  ;; make red darker
       if color < red - 3.5     ;; are we almost at black?
-        [ set color color
-          die ] ]
+        [ set color color ]]
+          ;; die ] ]
 end
 
 to spread-virus
@@ -149,7 +152,7 @@ gain-resistance-chance
 gain-resistance-chance
 0.0
 100
-84.0
+50.0
 1
 1
 %
@@ -164,7 +167,7 @@ recovery-chance
 recovery-chance
 0.0
 10.0
-5.1
+6.7
 0.1
 1
 %
@@ -179,7 +182,7 @@ virus-spread-chance
 virus-spread-chance
 0.0
 10.0
-0.5
+1.0
 0.1
 1
 %
@@ -248,7 +251,7 @@ number-of-nodes
 number-of-nodes
 10
 300
-55.0
+165.0
 5
 1
 NIL
@@ -263,7 +266,7 @@ virus-check-frequency
 virus-check-frequency
 1
 20
-8.0
+1.0
 1
 1
 ticks
@@ -278,7 +281,7 @@ initial-outbreak-size
 initial-outbreak-size
 1
 number-of-nodes
-11.0
+3.0
 1
 1
 NIL
@@ -293,7 +296,22 @@ average-node-degree
 average-node-degree
 1
 number-of-nodes - 1
-7.0
+21.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+43
+514
+215
+547
+initial-resistant
+initial-resistant
+0
+(number-of-nodes)-(initial-outbreak-size)
+25.0
 1
 1
 NIL
@@ -600,6 +618,14 @@ Polygon -7500403 true true 165 180 165 210 225 180 255 120 210 135
 Polygon -7500403 true true 135 105 90 60 45 45 75 105 135 135
 Polygon -7500403 true true 165 105 165 135 225 105 255 45 210 60
 Polygon -7500403 true true 135 90 120 45 150 15 180 45 165 90
+
+plant small
+false
+0
+Rectangle -7500403 true true 135 240 165 300
+Polygon -7500403 true true 135 255 90 210 45 195 75 255 135 285
+Polygon -7500403 true true 165 255 210 210 255 195 225 255 165 285
+Polygon -7500403 true true 135 240 120 195 150 165 180 195 165 240
 
 square
 false
